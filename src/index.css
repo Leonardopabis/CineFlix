@@ -1,18 +1,41 @@
 :root {
+  /* Background */
   --background-primary-color: #080B10;
   --background-secondary-color: #0D121A;
   --background-terciary-color: #151B24;
-  --background-card-color: #111720;
+  --background-card-color: #2c1b7f;
 
+  /* Roxo / Principal */
   --primary-color: #6C4DFF;
   --primary-hover-color: #7D63FF;
   --primary-light-color: #A78BFA;
+
+
+  /* Texto */
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #CBD5E1;
+  --color-text-muted: #94A3B8;
+  --color-text-disabled: #64748B;
+
+  /* Bordas */
+  --border-color: #202938;
+  --border-color-light: #2B3545;
+
+  /* Estados */
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+
+  /* Avaliação */
+  --color-rating: #FACC15;
 
   --font-family: "Inter", sans-serif;
 }
 
 /* Zera margens, preenchimentos e define o modelo de caixa */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -21,23 +44,34 @@
 }
 
 /* Remove estilos de lista */
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
 /* Facilita o uso de imagens */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* Herança de fontes para inputs e botões */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
+  border: none;
+  cursor: pointer;
 }
 
 /* Altura total da página */
-html, body {
+html,
+body {
   height: 100%;
   background-color: var(--background-primary-color);
 }
