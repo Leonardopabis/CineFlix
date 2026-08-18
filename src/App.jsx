@@ -2,7 +2,14 @@ import { Aside } from "./components/Aside"
 
 function App() {
   return (
-    <Aside />
+    <>
+    <div className="contentContainer">
+      <Aside />
+      <main>
+        <p>a</p>
+      </main>
+    </div>
+    </>
   )
 }
 
