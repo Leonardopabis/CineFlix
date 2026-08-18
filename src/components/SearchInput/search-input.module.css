@@ -1,0 +1,23 @@
+.inputForm {
+    width: 50%;
+    display: flex;
+    background-color: var(--background-secondary-color);
+    border-radius: 10px;
+    padding: 5px 10px;
+    gap: 10px;
+}
+
+.inputForm img {
+    width: 35px;
+    height: 35px;
+}
+
+.inputForm input {
+    background-color: transparent;
+    color: var(--text-primary-color);
+    flex-grow: 1;
+}
+
+.inputForm input::placeholder {
+    color: var(--text-secondary-color);
+}

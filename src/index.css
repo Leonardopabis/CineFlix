@@ -1,7 +1,7 @@
 :root {
   /* Background */
   --background-primary-color: #080B10;
-  --background-secondary-color: #0D121A;
+  --background-secondary-color: #1d2533;
   --background-terciary-color: #151B24;
   --background-card-color: #2c1b7f;
 
@@ -12,8 +12,8 @@
 
 
   /* Texto */
-  --color-text-primary: #F8FAFC;
-  --color-text-secondary: #CBD5E1;
+  --text-primary-color: #F8FAFC;
+  --text-secondary-color: #CBD5E1;
   --color-text-muted: #94A3B8;
   --color-text-disabled: #64748B;
 

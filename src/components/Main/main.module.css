@@ -1,0 +1,11 @@
+.main p {
+    color: #fff;
+}
+
+.main {
+    width: 100%;
+    margin: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
