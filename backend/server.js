@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 
-import { getPopularMovies  } from './api'
+import { getPopularMovies  } from './api.js'
 
 const app = express()
 

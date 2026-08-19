@@ -5,13 +5,15 @@ export async function getPopularMovies() {
         `${TMBD_URL}/movie/popular?language=pt-BR&page=1`,
         {
             headers: {
-                Authorization: `Bearer ${process.env.TMB_ACESS_TOKEN}`,
+                Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
                 accept:'application/json'
             }
         }
     )
 
     if (!response.ok) {
+        console.log('Status TMDB: ', response.status)
+        console.log('Resposta TMDB: ', await response.text())
         throw new Error('Erro ao buscar filmes na tbmd')
     }
 
