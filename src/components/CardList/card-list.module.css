@@ -1,6 +1,14 @@
+.cardListContainer {
+    width: 100%;
+    max-width: 100%;
+}
+
 .list {
     display: flex;
     gap: 20px;
+    overflow-x: auto;
+    width: 100%;
+
 }
 
 .cardListContainer h2 {

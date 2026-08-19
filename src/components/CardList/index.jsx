@@ -12,8 +12,6 @@ export function CardList() {
         <div className={styles.cardListContainer}>
             <h2>Populares</h2>
             <div className={styles.list}>
-                <Card/>
-                <Card/>
                 {movies.map((movie) => {
                     console.log(movie)
                     return (

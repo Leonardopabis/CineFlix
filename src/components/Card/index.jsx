@@ -9,7 +9,7 @@ export function Card({movie}) {
 
     return (
         <div className={styles.cardContainer}>
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path || movie.backdrop_path}`} alt={movie.title} />
+                <img className={styles.movieImg} src={`https://image.tmdb.org/t/p/w500${movie.poster_path || movie.backdrop_path}`} alt={movie.title} />
             <h3>{movie.title}</h3>
             <div className={styles.ratingContainer}>
                 <img className={styles.starImg} src={starImg} alt="" />
