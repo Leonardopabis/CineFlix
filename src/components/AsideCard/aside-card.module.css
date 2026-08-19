@@ -26,5 +26,5 @@
     }
 
     .asideCardContainer p {
-        color: #fff;
+        color: var(--text-primary-color);
     }

@@ -1,0 +1,4 @@
+.cardListContainer h2 {
+    color: var(--text-primary-color);
+    margin-bottom: 20px;
+}
