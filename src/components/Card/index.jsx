@@ -2,14 +2,18 @@ import styles from './card.module.css'
 import testImg from '../../assets/img/testImg.png'
 import starImg from '../../assets/img/starImg.png'
 
-export function Card() {
+export function Card({movie}) {
+    if(!movie) {
+        return null
+    }
+
     return (
         <div className={styles.cardContainer}>
-            <img src={testImg} alt="" />
-            <h3>Divertidamente 2</h3>
+            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path || movie.backdrop_path}`} alt={movie.title} />
+            <h3>{movie.title}</h3>
             <div className={styles.ratingContainer}>
                 <img className={styles.starImg} src={starImg} alt="" />
-                <p>8.1</p>
+                <p>{movie.vote_average ? movie.vote_average.toFixed(1) : "0.0"}</p>
             </div>
         </div>
     )
