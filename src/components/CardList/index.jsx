@@ -3,10 +3,9 @@ import { Card } from '../Card'
 import styles from './card-list.module.css'
 import { useContext, useRef, useState } from 'react'
 
-export function CardList({title}) {
+export function CardList({title, movies}) {
 
-    const {popularMoviesList} = useContext(ApiContext)
-    const movies = popularMoviesList ? popularMoviesList : []
+    
     const cardListRef = useRef(null)
 
     const handleNext = (rightDirection) => {
