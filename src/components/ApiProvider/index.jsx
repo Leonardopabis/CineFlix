@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ApiContext from "./ApiContext";
-import { getPopularMovies  } from '../../../backend/api.js'
 
-async function fetchPopularFilms(setPopularMoviesList) {
+async function fetchPopularFilms(setPopularMoviesList, pageNumber) {
     try {
-        const response = await fetch('http://localhost:3000/api/movies/popular')
+        const response = await fetch(`http://localhost:3000/api/movies/popular?page=${pageNumber}`)
 
         if (!response.ok) {
             throw new Error(`Erro na requisição: ${response.status}`)
@@ -13,7 +12,11 @@ async function fetchPopularFilms(setPopularMoviesList) {
         const movies = await response.json()
 
         console.log('filmes recebidos: ', movies)
-        setPopularMoviesList(movies)
+        setPopularMoviesList(prevList => {
+            const listaAtual = prevList || []
+            return [...listaAtual, ...movies.results]
+        })
+        
     } catch (error) {
         console.log('Erro ao buscar filmes: ', error.message)
     }
@@ -22,9 +25,17 @@ async function fetchPopularFilms(setPopularMoviesList) {
 export function ApiProvider({ children }) {
    
     const [popularMoviesList, setPopularMoviesList] = useState(null)
+    const executouRef = useRef(false)
 
     useEffect(() => {
-        fetchPopularFilms(setPopularMoviesList)
+        if (executouRef.current) return
+        executouRef.current = true
+        const loadInitialData = async () => {
+            setPopularMoviesList(null)
+            await fetchPopularFilms(setPopularMoviesList, 1)
+            await fetchPopularFilms(setPopularMoviesList, 2)
+        }
+        loadInitialData()
     }, [])
 
     return (

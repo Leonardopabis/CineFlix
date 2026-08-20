@@ -1,6 +1,7 @@
 .cardListContainer {
     width: 100%;
     max-width: 100%;
+    position: relative;
 }
 
 .list {
@@ -8,7 +9,14 @@
     gap: 20px;
     overflow-x: auto;
     width: 100%;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
 
+}
+
+.list::-webkit-scrollbar {
+    display: none;
 }
 
 .cardListContainer h2 {
@@ -16,98 +24,58 @@
     margin-bottom: 20px;
 }
 
-.cardListContainer {
-    position: relative;
-
-    width: 100%;
-}
-
-.cardListContainer h2 {
-    margin-bottom: 30px;
-
-    color: #ffffff;
-
-    font-size: 32px;
-}
-
-
-/* =========================
-   LISTA
-========================= */
-
-.list {
-    display: flex;
-
-    gap: 20px;
-
-    width: 100%;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    scroll-behavior: smooth;
-
-    scrollbar-width: none;
-}
-
-.list::-webkit-scrollbar {
-    display: none;
-}
-
-
-/* =========================
-   BOTÃO
-========================= */
-
 .carouselButton {
+    background: url(../../assets/img/rightArrow.png) center/contain no-repeat;
     position: absolute;
-
     top: 50%;
     right: 15px;
-
     z-index: 10;
-
     width: 50px;
     height: 80px;
-
     border: none;
     border-radius: 8px;
-
     background-color: rgba(0, 0, 0, 0.8);
-
     color: white;
-
-    font-size: 50px;
-    line-height: 1;
-
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     opacity: 0;
-
     pointer-events: none;
-
     transform: translateY(-50%);
-
     transition:
         opacity 0.2s ease,
         background-color 0.2s ease;
 }
 
-
-/* Aparece quando passar o mouse na área */
+.carouselButtonLeft {
+    background: url(../../assets/img/leftArrow.png) center/contain no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    z-index: 10;
+    width: 50px;
+    height: 80px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition:
+        opacity 0.2s ease,
+        background-color 0.2s ease;
+}
 
 .cardListContainer:hover .carouselButton {
     opacity: 1;
-
     pointer-events: auto;
 }
-
-
-/* Hover na seta */
 
 .carouselButton:hover {
     background-color: rgba(0, 0, 0, 0.95);

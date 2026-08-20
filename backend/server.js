@@ -10,7 +10,8 @@ app.use(express.json())
 
 app.get('/api/movies/popular', async (req, res) => {
     try {
-        const movies = await getPopularMovies();
+        const pageNumber = req.query.page || 1
+        const movies = await getPopularMovies(pageNumber);
 
         res.json(movies)
     } catch (error) {

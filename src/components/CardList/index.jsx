@@ -6,10 +6,10 @@ import { useContext, useRef, useState } from 'react'
 export function CardList({title}) {
 
     const {popularMoviesList} = useContext(ApiContext)
-    const movies = popularMoviesList?.results || []
+    const movies = popularMoviesList ? popularMoviesList : []
     const cardListRef = useRef(null)
 
-    const handleNext = () => {
+    const handleNext = (rightDirection) => {
         const container = cardListRef.current
         if (!container) return
         const card = container.firstElementChild
@@ -17,15 +17,24 @@ export function CardList({title}) {
         console.log(card)
         const cardWidth = card.offsetWidth
         const gap = 20
-        container.scrollBy({
-            left: (cardWidth + gap) * 5,
-            behavior: 'smooth',
-        })
+        if (rightDirection) {
+                container .scrollBy({
+                    left: (cardWidth + gap) * 5,
+                    behavior: 'smooth',
+                })
+        } else {
+            container .scrollBy({
+                    left: -(cardWidth + gap) * 5,
+                    behavior: 'smooth',
+                })
+        }
     }
 
     return (
         <div className="cardsCarousel">
             <div className={styles.cardListContainer}>
+                <button className={[styles.carouselButton, styles.carouselButtonLeft].join(' ')} onClick={() => handleNext(false)}>
+                </button>
                 <h2>{title}</h2>
                 <div className={styles.list} ref={cardListRef}>
                     {movies.map((movie) => {
@@ -36,8 +45,7 @@ export function CardList({title}) {
                     })}
                 </div>
 
-                <button className={[styles.carouselButton, styles.carouselButtonRight].join(' ')} onClick={handleNext}>
-
+                <button className={[styles.carouselButton, styles.carouselButtonRight].join(' ')} onClick={() => handleNext(true)}>
                 </button>
             </div>
         </div>

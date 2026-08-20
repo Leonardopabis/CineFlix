@@ -1,8 +1,8 @@
 const TMBD_URL = 'https://api.themoviedb.org/3'
 
-export async function getPopularMovies() {
+export async function getPopularMovies(pageNumber) {
     const response = await fetch(
-        `${TMBD_URL}/movie/popular?language=pt-BR&page=1`,
+        `${TMBD_URL}/movie/popular?language=pt-BR&page=${pageNumber}`,
         {
             headers: {
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
