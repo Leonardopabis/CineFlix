@@ -8,7 +8,7 @@ export function Main() {
         <main className={styles.main}>
             <SearchInput/>
             <Hero/>
-            <CardList />
+            <CardList title="Populares"/>
         </main>
     )
 }

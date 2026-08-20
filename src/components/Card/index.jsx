@@ -1,5 +1,4 @@
 import styles from './card.module.css'
-import testImg from '../../assets/img/testImg.png'
 import starImg from '../../assets/img/starImg.png'
 
 export function Card({movie}) {
