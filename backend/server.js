@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 
-import { getPopularMovies  } from './api.js'
+import { getNowPlaying, getPopularMovies, getTopRated, getUpcoming  } from './api.js'
 
 const app = express()
 
@@ -12,6 +12,48 @@ app.get('/api/movies/popular', async (req, res) => {
     try {
         const pageNumber = req.query.page || 1
         const movies = await getPopularMovies(pageNumber);
+
+        res.json(movies)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'erro ao buscar filmes'
+        })
+    }
+})
+
+app.get('/api/movies/top_rated', async (req, res) => {
+    try {
+        const pageNumber = req.query.page || 1
+        const movies = await getTopRated(pageNumber);
+
+        res.json(movies)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'erro ao buscar filmes'
+        })
+    }
+})
+
+app.get('/api/movies/now_playing', async (req, res) => {
+    try {
+        const pageNumber = req.query.page || 1
+        const movies = await getNowPlaying(pageNumber);
+
+        res.json(movies)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'erro ao buscar filmes'
+        })
+    }
+})
+
+app.get('/api/movies/upcoming', async (req, res) => {
+    try {
+        const pageNumber = req.query.page || 1
+        const movies = await getUpcoming(pageNumber);
 
         res.json(movies)
     } catch (error) {

@@ -7,14 +7,22 @@ import ApiContext from '../ApiProvider/ApiContext'
 
 export function Main() {
 
-    const {popularMoviesList} = useContext(ApiContext)
-    const movies = popularMoviesList ? popularMoviesList : []
+    const {popularMoviesList, topRatedMoviesList, nowPlayingMoviesList, upcomingMoviesList} = useContext(ApiContext)
+    const popularMovies = popularMoviesList ? popularMoviesList : []
+    const topRatedMovies = topRatedMoviesList ? topRatedMoviesList : []
+    const nowPlayingMovies = nowPlayingMoviesList ? nowPlayingMoviesList : []
+    const upcomingMovies = upcomingMoviesList ? upcomingMoviesList : []
+
+    
 
     return (
         <main className={styles.main}>
             <SearchInput/>
             <Hero/>
-            <CardList title="Populares" movies={movies}/>
+            <CardList title="Populares" movies={popularMovies}/>
+            <CardList title="Melhores Avaliações" movies={topRatedMovies}/>
+            <CardList title="Em Cartaz" movies={nowPlayingMovies}/>
+            <CardList title="Próximos Lançamentos" movies={upcomingMovies}/>
         </main>
     )
 }
