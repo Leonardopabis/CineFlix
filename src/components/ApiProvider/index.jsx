@@ -22,6 +22,23 @@ async function fetchMovies(setMoviesList, pageNumber, listType) {
     }
 }
 
+async function fetchHeroMovies(setMoviesList) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/movies/heroFilms`)
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`)
+        }
+
+        const movies = await response.json()
+
+        console.log('filmes recebidos: ', movies)
+        setMoviesList(movies)
+    } catch (error) {
+        console.log('Erro ao buscar filmes: ', error.message)
+    }
+}
+
 export function ApiProvider({ children }) {
    
     const [popularMoviesList, setPopularMoviesList] = useState(null)
@@ -30,6 +47,7 @@ export function ApiProvider({ children }) {
     const [topRatedMoviesList, setTopRatedMoviesList] = useState(null)
     const [nowPlayingMoviesList, setNowPlayingMoviesList] = useState(null)
     const [upcomingMoviesList, setUpcomingMoviesList] = useState(null)
+    const [heroMovies, setHeroMovies] = useState(null)
     
     useEffect(() => {
         if (executouRef.current) return
@@ -48,6 +66,8 @@ export function ApiProvider({ children }) {
             //upcoming
             await fetchMovies(setUpcomingMoviesList, 1, 'upcoming')
             await fetchMovies(setUpcomingMoviesList, 2, 'upcoming')
+            //hero movies
+            await fetchHeroMovies(setHeroMovies)
 
         }
         loadInitialData()
@@ -58,7 +78,8 @@ export function ApiProvider({ children }) {
             popularMoviesList,
             topRatedMoviesList,
             nowPlayingMoviesList,
-            upcomingMoviesList
+            upcomingMoviesList,
+            heroMovies
         }}>
             {children}
         </ApiContext>

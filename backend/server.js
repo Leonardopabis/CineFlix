@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 
-import { getNowPlaying, getPopularMovies, getTopRated, getUpcoming  } from './api.js'
+import { getHeroFilms, getNowPlaying, getPopularMovies, getTopRated, getUpcoming  } from './api.js'
 
 const app = express()
 
@@ -54,6 +54,19 @@ app.get('/api/movies/upcoming', async (req, res) => {
     try {
         const pageNumber = req.query.page || 1
         const movies = await getUpcoming(pageNumber);
+
+        res.json(movies)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'erro ao buscar filmes'
+        })
+    }
+})
+
+app.get('/api/movies/heroFilms', async (req, res) => {
+    try {
+        const movies = await getHeroFilms();
 
         res.json(movies)
     } catch (error) {

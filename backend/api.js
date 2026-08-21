@@ -6,7 +6,7 @@ export async function getPopularMovies(pageNumber) {
         {
             headers: {
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
-                accept:'application/json'
+                accept: 'application/json'
             }
         }
     )
@@ -26,7 +26,7 @@ export async function getTopRated(pageNumber) {
         {
             headers: {
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
-                accept:'application/json'
+                accept: 'application/json'
             }
         }
     )
@@ -46,7 +46,7 @@ export async function getNowPlaying(pageNumber) {
         {
             headers: {
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
-                accept:'application/json'
+                accept: 'application/json'
             }
         }
     )
@@ -66,7 +66,7 @@ export async function getUpcoming(pageNumber) {
         {
             headers: {
                 Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
-                accept:'application/json'
+                accept: 'application/json'
             }
         }
     )
@@ -79,3 +79,25 @@ export async function getUpcoming(pageNumber) {
 
     return response.json()
 }
+
+export async function getHeroFilms() {
+    const anoString = new Date().getFullYear().toString()
+    const response = await fetch(
+        `${TMBD_URL}/discover/movie?include_adult=false&include_video=false&language=pt-BR&page=1&primary_release_year=${anoString}&sort_by=vote_average.desc&vote_average.gte=8.2&vote_count.gte=1000`,
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+                accept: 'application/json'
+            }
+        }
+
+    )
+    if (!response.ok) {
+        console.log('Status TMDB: ', response.status)
+        console.log('Resposta TMDB: ', await response.text())
+        throw new Error('Erro ao buscar filmes na tbmd')
+    }
+
+    return response.json()
+
+} 
