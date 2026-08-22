@@ -1,3 +1,8 @@
+.cardsCarousel {
+    position: relative;
+    width: 100%;
+}
+
 .heroContainer {
     width: 100%;
     height: 400px;
@@ -31,3 +36,106 @@
     z-index: 2;
 }
 
+.arrow {
+    position: absolute;
+
+    top: 50%;
+
+    z-index: 10;
+
+    width: 40px;
+    height: 70px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: rgba(0, 0, 0, 0.8);
+
+    color: white;
+
+    font-size: 50px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+
+    transition: 
+        opacity 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.cardsCarousel:hover .arrow {
+    opacity: 1;
+    pointer-events: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.arrow:hover {
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+
+.arrowLeft {
+    left: 0px;
+    background: url(../../assets/img/leftArrow.png) center/contain no-repeat;
+}
+
+.arrowRight {
+    right: 0px;
+    background: url(../../assets/img/rightArrow.png) center/contain no-repeat;
+}
+
+.dots {
+    position: absolute;
+
+    bottom: 20px;
+    left: 50%;
+
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    transform: translateX(-50%);
+}
+
+
+.dot,
+.activeDot {
+    width: 10px;
+    height: 10px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition:
+        width 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.dot {
+    background-color: var(--text-secondary-color);
+}
+
+
+.activeDot {
+    width: 25px;
+
+    border-radius: 10px;
+
+    background-color: var(--primary-color);
+}

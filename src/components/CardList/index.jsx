@@ -13,16 +13,16 @@ export function CardList({title, movies}) {
         if (!container) return
         const card = container.firstElementChild
         if (!card) return
-        console.log(card)
+        // console.log(card)
         const cardWidth = card.offsetWidth
         const gap = 20
         if (rightDirection) {
-                container .scrollBy({
+                container.scrollBy({
                     left: (cardWidth + gap) * 5,
                     behavior: 'smooth',
                 })
         } else {
-            container .scrollBy({
+            container.scrollBy({
                     left: -(cardWidth + gap) * 5,
                     behavior: 'smooth',
                 })
@@ -30,14 +30,14 @@ export function CardList({title, movies}) {
     }
 
     return (
-        <div className="cardsCarousel">
+        <div className={styles.cardsCarousel}>
             <div className={styles.cardListContainer}>
                 <button className={[styles.carouselButton, styles.carouselButtonLeft].join(' ')} onClick={() => handleNext(false)}>
                 </button>
                 <h2>{title}</h2>
                 <div className={styles.list} ref={cardListRef}>
                     {movies.map((movie) => {
-                        console.log(movie)
+                        // console.log(movie)
                         return (
                             <Card key={movie.id} movie={movie}/>
                         )

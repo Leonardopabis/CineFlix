@@ -33,7 +33,7 @@ async function fetchHeroMovies(setMoviesList) {
         const movies = await response.json()
 
         console.log('filmes recebidos: ', movies)
-        setMoviesList(movies)
+        setMoviesList(movies.results)
     } catch (error) {
         console.log('Erro ao buscar filmes: ', error.message)
     }
@@ -47,7 +47,9 @@ export function ApiProvider({ children }) {
     const [topRatedMoviesList, setTopRatedMoviesList] = useState(null)
     const [nowPlayingMoviesList, setNowPlayingMoviesList] = useState(null)
     const [upcomingMoviesList, setUpcomingMoviesList] = useState(null)
-    const [heroMovies, setHeroMovies] = useState(null)
+    const [heroMoviesList, setHeroMoviesList] = useState(null)
+
+    const [currentHeroIndex, setCurrentHeroIndex] = useState(0)
     
     useEffect(() => {
         if (executouRef.current) return
@@ -67,7 +69,7 @@ export function ApiProvider({ children }) {
             await fetchMovies(setUpcomingMoviesList, 1, 'upcoming')
             await fetchMovies(setUpcomingMoviesList, 2, 'upcoming')
             //hero movies
-            await fetchHeroMovies(setHeroMovies)
+            await fetchHeroMovies(setHeroMoviesList)
 
         }
         loadInitialData()
@@ -79,7 +81,9 @@ export function ApiProvider({ children }) {
             topRatedMoviesList,
             nowPlayingMoviesList,
             upcomingMoviesList,
-            heroMovies
+            heroMoviesList,
+            currentHeroIndex,
+            setCurrentHeroIndex
         }}>
             {children}
         </ApiContext>
