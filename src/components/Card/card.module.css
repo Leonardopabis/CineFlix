@@ -31,13 +31,23 @@
     color: var(--text-secondary-color);
 }
 
-.ratingContainer {
+.ratingContainer, .rating {
     display: flex;
     margin-left: 5px;
     gap: 5px;
+    align-items: center;
+}
+.ratingContainer {
+    justify-content: space-between;
 }
 
-.starImg {
+.starImg, .infoImg {
     max-width: 25px;
     object-fit: cover;
 }
+
+.infoImgBtn {
+    background-color: transparent;
+    margin-right: 5px;
+}
+

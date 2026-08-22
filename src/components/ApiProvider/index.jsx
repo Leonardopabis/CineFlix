@@ -75,6 +75,17 @@ export function ApiProvider({ children }) {
         loadInitialData()
     }, [])
 
+    const infoModalRef = useRef(null)
+    const [currentInfoMovie, setCurrentInfoMovie] = useState('')
+    function openInfoModal(movie) {
+        setCurrentInfoMovie(movie)
+        infoModalRef.current.showModal()
+    }
+    function closeInfoModal(movie) {
+        setCurrentInfoMovie(null)
+        infoModalRef.current.close()
+    }
+
     return (
         <ApiContext value={{
             popularMoviesList,
@@ -83,7 +94,11 @@ export function ApiProvider({ children }) {
             upcomingMoviesList,
             heroMoviesList,
             currentHeroIndex,
-            setCurrentHeroIndex
+            setCurrentHeroIndex,
+            infoModalRef,
+            currentInfoMovie,
+            openInfoModal,
+            closeInfoModal
         }}>
             {children}
         </ApiContext>

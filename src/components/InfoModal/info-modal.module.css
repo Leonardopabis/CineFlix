@@ -1,0 +1,20 @@
+.infoModal {
+    width: 70%;
+    height: 80%;
+    background-color: var(--background-primary-color);
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    border: none;
+}
+
+.infoModal::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);         
+}
+
+body:has(.infoModal:open) {
+    overflow: hidden;
+}

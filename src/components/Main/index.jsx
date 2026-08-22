@@ -4,6 +4,7 @@ import { Hero } from '../Hero'
 import { SearchInput } from '../SearchInput'
 import styles from './main.module.css'
 import ApiContext from '../ApiProvider/ApiContext'
+import { InfoModal } from '../InfoModal'
 
 export function Main() {
 
@@ -20,6 +21,7 @@ export function Main() {
         <main className={styles.main}>
             <SearchInput/>
             <Hero movies={heroMovies}/>
+            <InfoModal/>
             <CardList title="Populares" movies={popularMovies}/>
             <CardList title="Melhores Avaliações" movies={topRatedMovies}/>
             <CardList title="Em Cartaz" movies={nowPlayingMovies}/>
