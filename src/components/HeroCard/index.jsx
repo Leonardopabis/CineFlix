@@ -1,8 +1,11 @@
+import { useContext } from 'react'
 import styles from './hero-card.module.css'
+import ApiContext from '../ApiProvider/ApiContext'
 
 export function HeroCard({movie}) {
     const isTooLong = movie.overview.length > 250
     const cutOverview = isTooLong ? movie.overview.slice(0, 250) + '...' : movie.overview
+    const {openInfoModal} = useContext(ApiContext)
 
     return (
         <>
@@ -11,7 +14,7 @@ export function HeroCard({movie}) {
                 <span>Em destaque</span>
                 <h2>{movie.title}</h2>
                 <p>{cutOverview}</p>
-                <button>Mais informações</button>
+                <button onClick={() => {openInfoModal(movie)}}>Mais informações</button>
             </div>
         </>
     )
