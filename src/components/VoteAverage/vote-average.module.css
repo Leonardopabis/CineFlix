@@ -1,0 +1,15 @@
+.ratingContainer {
+    display: flex;
+    margin-left: 5px;
+    gap: 5px;
+    align-items: center;
+}
+
+.ratingContainer p {
+    margin: 0;
+}
+
+.starImg {
+    max-width: 25px;
+    object-fit: cover;
+}

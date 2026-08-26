@@ -82,7 +82,7 @@ export function ApiProvider({ children }) {
         infoModalRef.current.showModal()
     }
     function closeInfoModal(movie) {
-        setCurrentInfoMovie(null)
+        setCurrentInfoMovie('')
         infoModalRef.current.close()
     }
 

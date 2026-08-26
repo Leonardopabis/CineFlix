@@ -36,10 +36,10 @@ export function CardList({title, movies}) {
                 </button>
                 <h2>{title}</h2>
                 <div className={styles.list} ref={cardListRef}>
-                    {movies.map((movie) => {
+                    {movies.map((movie, index) => {
                         // console.log(movie)
                         return (
-                            <Card key={movie.id} movie={movie}/>
+                            <Card key={`${movie.id}-${index}`} movie={movie}/>
                         )
                     })}
                 </div>
