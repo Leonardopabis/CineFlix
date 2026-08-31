@@ -4,12 +4,13 @@ import './index.css'
 import App from './App.jsx'
 import { AsideProvider } from './components/AsideProvider/index.jsx'
 import { ApiProvider } from './components/ApiProvider/index.jsx'
+import { AppRouter } from './router/index.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AsideProvider>
       <ApiProvider>
-        <App />
+        <AppRouter/>
       </ApiProvider>
     </AsideProvider>
   </StrictMode>,

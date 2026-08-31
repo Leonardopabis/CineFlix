@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 
-import { getHeroFilms, getNowPlaying, getPopularMovies, getTopRated, getUpcoming  } from './api.js'
+import { getHeroFilms, getNowPlaying, getPopularMovies, getTopRated, getUpcoming, searchMovies  } from './api.js'
 
 const app = express()
 
@@ -73,6 +73,24 @@ app.get('/api/movies/heroFilms', async (req, res) => {
         console.log(error)
         res.status(500).json({
             message: 'erro ao buscar filmes'
+        })
+    }
+})
+
+app.get('/api/movies/search', async (req, res) => {
+    try {
+        const {query, page} = req.query
+        if (!query) {
+            return res.status(400).json({
+                message: 'informe o termo de busca'
+            })
+        }
+        const results = await searchMovies(query, page)
+        res.json(results)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'Erro ao realizar busca'
         })
     }
 })

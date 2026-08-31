@@ -11,10 +11,14 @@ export function Card({movie}) {
     }
     const {openInfoModal} = useContext(ApiContext)
 
+    const title = movie.title || movie.name
+
+    const image = movie.poster_path || movie.profile_path || movie.backdrop_path
+
     return (
         <div className={styles.cardContainer}>
-                <img className={styles.movieImg} src={`https://image.tmdb.org/t/p/w500${movie.poster_path || movie.backdrop_path}`} alt={movie.title} />
-            <h3>{movie.title}</h3>
+                <img className={styles.movieImg} src={`https://image.tmdb.org/t/p/w500${image}`} alt={title} />
+            <h3>{title}</h3>
             <div className={styles.ratingContainer}>
                 
                     <VoteAverage movie={movie}/>

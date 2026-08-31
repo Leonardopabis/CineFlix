@@ -86,6 +86,10 @@ export function ApiProvider({ children }) {
         infoModalRef.current.close()
     }
 
+    //search
+    const [query, setQuery] = useState('')
+    const [searchPage, setSearchPage] = useState('1')
+
     return (
         <ApiContext value={{
             popularMoviesList,
@@ -98,7 +102,11 @@ export function ApiProvider({ children }) {
             infoModalRef,
             currentInfoMovie,
             openInfoModal,
-            closeInfoModal
+            closeInfoModal,
+            query,
+            setQuery,
+            searchPage,
+            setSearchPage
         }}>
             {children}
         </ApiContext>

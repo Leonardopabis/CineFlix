@@ -101,3 +101,22 @@ export async function getHeroFilms() {
     return response.json()
 
 } 
+
+export async function searchMovies(query, page = 1) {
+    const response = await fetch(
+         `${TMBD_URL}/search/movie?query=${encodeURIComponent(query)}&language=pt-BR&page=${page}&include_adult=true`,
+         {
+            headers: {
+                Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+                accept: 'application/json'
+            }
+         }
+    )
+    if (!response.ok) {
+        console.log('Status tmdb: ', response.status)
+        console.log('resposta tmdb', await response.text())
+        throw new Error('Erro ao buscar filmes')
+    }
+
+    return response.json()
+}

@@ -16,6 +16,7 @@
     background-color: transparent;
     color: var(--text-primary-color);
     flex-grow: 1;
+    cursor: text;
 }
 
 .inputForm input::placeholder {
