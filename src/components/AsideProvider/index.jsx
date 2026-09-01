@@ -14,13 +14,14 @@ export function AsideProvider({ children }) {
             id: crypto.randomUUID(),
             name: 'Home',
             img: `${homeImg}`,
-            cardFocus: true,
+            to: '/',
         },
         {
             id: crypto.randomUUID(),
             name:'Filmes',
             img: `${filmesImg}`,
             cardFocus: false,
+            to: '/movies',
         },
         {
             id: crypto.randomUUID(),

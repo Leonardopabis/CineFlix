@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "../App";
 import { SearchPage } from "../components/SearchPage";
 import { ProtectedRoute } from "../components/ProtectedRoute";
+import { InfoModal } from "../components/InfoModal";
 
 
 export function AppRouter() {
@@ -18,6 +19,7 @@ export function AppRouter() {
                     <Route path="search" element={<SearchPage/> }/>
                 </Route>
             </Routes>
+                <InfoModal/>
         </BrowserRouter>
     )
 }

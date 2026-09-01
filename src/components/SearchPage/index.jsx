@@ -52,7 +52,9 @@ export function SearchPage() {
             <div className={styles.results}>
                 {movies.map((movie) => {
                     return(
-                        <Card key={`${movie.media_type}-${movie.id}`} movie={movie}/>
+                        <div className={styles.cardContainer} key={`${movie.media_type}-${movie.id}`}>
+                            <Card key={`${movie.media_type}-${movie.id}`} movie={movie}/>
+                        </div>
                     )
                 })}
 
