@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "../App";
 import { SearchPage } from "../components/SearchPage";
+import { ProtectedRoute } from "../components/ProtectedRoute";
 
 
 export function AppRouter() {
@@ -12,7 +13,7 @@ export function AppRouter() {
                     <Route path="login" element={<login/>}/>
                     <Route path="logout" element={<logout/>}/>
                 </Route> */}
-                <Route path="/">
+                <Route path="/" element={<ProtectedRoute/>}>
                     <Route index element={<App/>}/>
                     <Route path="search" element={<SearchPage/> }/>
                 </Route>

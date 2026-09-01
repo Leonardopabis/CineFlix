@@ -45,9 +45,9 @@ export function SearchPage() {
 
     return (
         <main className={styles.searchPage}>
-            <h1>
+            <h2>
                 Resultados para: "{query}"
-            </h1>
+            </h2>
 
             <div className={styles.results}>
                 {movies.map((movie) => {
