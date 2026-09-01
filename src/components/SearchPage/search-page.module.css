@@ -18,3 +18,13 @@
     gap: 10px;
     flex: 0 0 175px;
 }
+
+.button {
+    background-color: var(--background-secondary-color);
+    color: var(--text-primary-color);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}

@@ -6,10 +6,16 @@ import { Card } from '../Card'
 export function SearchPage() {
         const [searchParams] = useSearchParams()
         const query = searchParams.get('query')
-        const page = searchParams.get('page')
+        const [page, setPage] = useState(1)
+        
 
         const [movies, setMovies] = useState([])
         const [loading, setLoading] = useState(true)
+
+        useEffect(() => {
+            setMovies([])
+            setPage(1)
+        }, [query])
 
         useEffect(() => {
             async function fetchSearch() {
@@ -17,7 +23,7 @@ export function SearchPage() {
                     setLoading(true)
 
                     const response = await fetch(
-                        `http://localhost:3000/api/movies/search?query=${query}&page=${page || 1}`
+                        `http://localhost:3000/api/movies/search?query=${query}&page=${page}`
                     )
 
                     if (!response.ok) {
@@ -26,7 +32,12 @@ export function SearchPage() {
 
                     const data = await response.json()
 
-                    setMovies(data.results)
+                    setMovies((prevMovies) => {
+                        if (page === 1) {
+                            return data.results
+                        }
+                        return [...prevMovies, ...data.results]
+                    })
                 } catch (error) {
                     console.log(error)
                 }finally {
@@ -37,9 +48,13 @@ export function SearchPage() {
             if (query) {
                 fetchSearch()
             }
-        }, [query])
+        }, [query, page])
 
-        if (loading) {
+        function handleLoadMore() {
+            setPage((prevPage) => prevPage + 1)
+        }
+
+        if (loading && page === 1) {
             return <p>Carregando...</p>
         }
 
@@ -59,6 +74,10 @@ export function SearchPage() {
                 })}
 
             </div>
+
+            <button className={styles.button} onClick={handleLoadMore}>
+                Carregar Mais
+            </button>
         </main>
     )
 }
