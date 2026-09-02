@@ -41,12 +41,12 @@
     justify-content: space-between;
 }
 
-.infoImg {
+.btn img {
     max-width: 25px;
     object-fit: cover;
 }
 
-.infoImgBtn {
+.footer button {
     background-color: transparent;
     margin-right: 5px;
 }

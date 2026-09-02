@@ -90,6 +90,67 @@ export function ApiProvider({ children }) {
     const [query, setQuery] = useState('')
     const [searchPage, setSearchPage] = useState('1')
 
+    //database
+    const [favoritesIds, setFavoritesIds] = useState(new Set())
+
+    function favKey(id, media_type) {
+        return `${media_type}-${id}`
+    }
+
+    useEffect(() => {
+        async function loadFavoritesIds() {
+            try {
+                const response = await fetch('http://localhost:3000/api/favorites/ids')
+                const rows = await response.json()
+                setFavoritesIds(new Set(rows.map(row => favKey(row.movie_id, row.media_type))))
+            } catch (error) {
+                console.error('Erro ao carregar favoritos:', error)
+            }
+        }
+        loadFavoritesIds()
+    }, [])
+
+    async function toggleFavorite(movie) {
+        const media_type = movie.media_type || 'movie'
+        const key = favKey(movie.id, media_type)
+        const isFavorited = favoritesIds.has(key)
+        
+        setFavoritesIds(prev => {
+            const next = new Set(prev)
+            isFavorited ? next.delete(key) : next.add(key)
+            return next
+        })
+
+        try {
+            if (isFavorited) {
+                await fetch(`http://localhost:3000/api/favorites/${movie.id}/${media_type}`, {
+                    method: 'DELETE'
+                })
+            } else {
+                await fetch(`http://localhost:3000/api/favorites`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        movie_id: movie.id,
+                        media_type: media_type,
+                        title: movie.title || movie.name,
+                        poster_path: movie.poster_path || movie.profile_path || movie.backdrop_path,
+                        vote_average: movie.vote_average
+                    })
+                })
+            }
+        } catch (error) {
+            console.error('Erro ao favoritar:', error)
+            setFavoritesIds(prev => {
+                const next = new Set(prev)
+                isFavorited ? next.add(key) : next.delete(key)
+                return next
+            })
+        }
+    }
+
     return (
         <ApiContext value={{
             popularMoviesList,
@@ -106,7 +167,9 @@ export function ApiProvider({ children }) {
             query,
             setQuery,
             searchPage,
-            setSearchPage
+            setSearchPage,
+            favoritesIds,
+            toggleFavorite
         }}>
             {children}
         </ApiContext>

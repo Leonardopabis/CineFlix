@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 
 import { getHeroFilms, getNowPlaying, getPopularMovies, getTopRated, getUpcoming, searchMovies  } from './api.js'
+import db from './db/db.js'
 
 const app = express()
 
@@ -97,4 +98,54 @@ app.get('/api/movies/search', async (req, res) => {
 
 app.listen(process.env.PORT, () => {
     console.log(`Servidor rodando na porta ${process.env.PORT}`)
+})
+
+//database
+app.get('/api/favorites', async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM favorites ORDER BY added_at DESC')
+        res.json(rows)
+    } catch (error){
+        console.log(error)
+        res.status(500).json({message: 'Erro ao buscar favoritos'})
+    }
+})
+
+app.get('/api/favorites/ids', async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT movie_id, media_type FROM favorites')
+        res.json(rows)
+    } catch (error){
+        console.log(error)
+        res.status(500).json({message: 'Erro ao buscar favoritos'})
+    }
+})
+
+app.post('/api/favorites', async (req, res) => {
+    try {
+        const {movie_id, media_type, title, poster_path, vote_average} = req.body
+        if (!movie_id || !title) {
+            return res.status(400).json({message: 'Dados incompletos'})
+        }
+
+        await db.query('INSERT IGNORE INTO favorites (movie_id, media_type, title, poster_path, vote_average) VALUES (?, ?, ?, ?, ?)', [movie_id, media_type || 'movie', title, poster_path, vote_average])
+
+        res.status(201).json({message: 'favoritado'})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message: 'Erro ao favoritar'})
+    }
+})
+
+app.delete('/api/favorites/:movie_id/:media_type', async (req, res) => {
+    try {
+        const {movie_id, media_type} = req.params
+
+        await db.query('DELETE FROM favorites WHERE movie_id = ? AND media_type = ?', [movie_id, media_type])
+
+        res.json({message: 'Removido dos favoritos'})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message: 'Erro ao remover dos favoritos'})
+    }
 })

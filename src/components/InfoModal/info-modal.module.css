@@ -67,3 +67,13 @@ body:has(.infoModal:open) {
 .footer * {
     margin: 0;
 }
+
+.heartBtn {
+    max-width: 100px;
+    object-fit: cover;
+    background-color: transparent;
+    color: var(--text-secondary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

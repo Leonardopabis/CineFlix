@@ -3,10 +3,12 @@ import styles from './info-modal.module.css'
 import ApiContext from '../ApiProvider/ApiContext'
 import { VoteAverage } from '../VoteAverage';
 import closeImg from '../../assets/img/closeImg.png'
+import { Heart } from '../Heart';
 
 export function InfoModal() {
-    const  {infoModalRef, currentInfoMovie, closeInfoModal} = useContext(ApiContext)
+    const  {infoModalRef, currentInfoMovie, closeInfoModal, favoritesIds} = useContext(ApiContext)
     const bgUrl = `https://image.tmdb.org/t/p/w500${currentInfoMovie?.poster_path || currentInfoMovie?.backdrop_path}`;
+    const isFavorited = favoritesIds.has(`${currentInfoMovie.media_type || 'movie'}-${currentInfoMovie.id}`)
 
     return (
         <dialog className={styles.infoModal} ref={infoModalRef} style={{backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${bgUrl})`}}>
@@ -21,6 +23,7 @@ export function InfoModal() {
             <div className={styles.footer}>
                 <p>Popularidade: {currentInfoMovie.popularity?.toFixed(0)}</p>
                 <VoteAverage movie={currentInfoMovie}/>
+                <Heart className={[styles.heartBtn, styles.btn].join(' ')} movie={currentInfoMovie} isFavorited={isFavorited}>{isFavorited ? "Desfavoritar" : "Favoritar"}</Heart>
             </div>
         </dialog>
     )
