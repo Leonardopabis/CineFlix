@@ -1,7 +1,17 @@
 import express from 'express'
 import cors from 'cors'
 
-import { getHeroFilms, getNowPlaying, getPopularMovies, getTopRated, getUpcoming, searchMovies  } from './api.js'
+import { 
+    getHeroFilms, 
+    getNowPlaying, 
+    getPopularMovies, 
+    getTopRated, 
+    getUpcoming, 
+    searchMovies,
+    getPopularSeries,
+    getTopRatedSeries,
+    getOnTheAirSeries
+} from './api.js'
 import db from './db/db.js'
 
 const app = express()
@@ -147,5 +157,47 @@ app.delete('/api/favorites/:movie_id/:media_type', async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({message: 'Erro ao remover dos favoritos'})
+    }
+})
+
+app.get('/api/series/popular', async (req, res) => {
+    try {
+        const pageNumber = req.query.page || 1
+        const series = await getPopularSeries(pageNumber);
+
+        res.json(series)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'erro ao buscar séries'
+        })
+    }
+})
+
+app.get('/api/series/top_rated', async (req, res) => {
+    try {
+        const pageNumber = req.query.page || 1
+        const series = await getTopRatedSeries(pageNumber);
+
+        res.json(series)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'erro ao buscar séries'
+        })
+    }
+})
+
+app.get('/api/series/on_the_air', async (req, res) => {
+    try {
+        const pageNumber = req.query.page || 1
+        const series = await getOnTheAirSeries(pageNumber);
+
+        res.json(series)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'erro ao buscar séries'
+        })
     }
 })

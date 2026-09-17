@@ -121,19 +121,63 @@ export async function searchMovies(query, page = 1) {
     return response.json()
 }
 
-export async function getFavoritesMovies() {
-    try {
-        const response = await fetch('http://localhost:3000/api/favorites')
 
-        if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.status}`)
+export async function getPopularSeries(pageNumber) {
+    const response = await fetch(
+        `${TMBD_URL}/tv/popular?language=pt-BR&page=${pageNumber}`,
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+                accept: 'application/json'
+            }
         }
+    )
 
-        const favorites = await response.json()
-        console.log(favorites)
-        return favorites
-    } catch (error) {
-        console.error('Erro ao buscar filmes favoritos:', error)
-        throw new Error('Erro ao buscar filmes favoritos')
+    if (!response.ok) {
+        console.log('Status TMDB: ', response.status)
+        console.log('Resposta TMDB: ', await response.text())
+        throw new Error('Erro ao buscar séries na tbmd')
     }
+
+    return response.json()
+}
+
+export async function getTopRatedSeries(pageNumber) {
+    const response = await fetch(
+        `${TMBD_URL}/tv/top_rated?language=pt-BR&page=${pageNumber}`,
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+                accept: 'application/json'
+            }
+        }
+    )
+
+    if (!response.ok) {
+        console.log('Status TMDB: ', response.status)
+        console.log('Resposta TMDB: ', await response.text())
+        throw new Error('Erro ao buscar séries na tbmd')
+    }
+
+    return response.json()
+}
+
+export async function getOnTheAirSeries(pageNumber) {
+    const response = await fetch(
+        `${TMBD_URL}/tv/on_the_air?language=pt-BR&page=${pageNumber}`,
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+                accept: 'application/json'
+            }
+        }
+    )
+
+    if (!response.ok) {
+        console.log('Status TMDB: ', response.status)
+        console.log('Resposta TMDB: ', await response.text())
+        throw new Error('Erro ao buscar séries na tbmd')
+    }
+
+    return response.json()
 }

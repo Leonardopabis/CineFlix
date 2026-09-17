@@ -10,8 +10,8 @@ export function Card({movie}) {
     if(!movie) {
         return null
     }
-    const {openInfoModal, favoritesIds, toggleFavorite} = useContext(ApiContext)
-    const isFavorited = favoritesIds.has(`${movie.media_type || 'movie'}-${movie.id}`)
+    const {openInfoModal, favoriteIds, toggleFavorite} = useContext(ApiContext)
+    const isFavorited = favoriteIds.has(`${movie.media_type || 'movie'}-${movie.id}`)
 
     const title = movie.title || movie.name
 

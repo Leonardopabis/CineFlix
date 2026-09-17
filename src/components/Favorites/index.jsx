@@ -1,30 +1,17 @@
+import { useContext, useEffect } from 'react'
 import { Card } from '../Card'
 import styles from './favorites.module.css'
-import { getFavoritesMovies } from '../../../backend/api'
-import { useEffect, useState } from 'react'
+import ApiContext from '../ApiProvider/ApiContext'
 
 export function Favorites() {
 
-    const [favoriteMovies, setFavoriteMovies] = useState([])
-    const [loading, setLoading] = useState(true)
+    const { favoriteMovies, fetchFavorites } = useContext(ApiContext)
 
     useEffect(() => {
-        async function fetchFavorites() {
-            try {
-                const data = await getFavoritesMovies()
-
-                setFavoriteMovies(data || [])
-            } catch (error) {
-                console.log("Erro ao buscar filmes favoritos: ", error)
-            } finally {
-                setLoading(false)
-            }
-        }
-
         fetchFavorites()
     }, [])
 
-    if (loading) {
+    if (favoriteMovies === null) {
         return <div className={styles.favorites}>Carregando favoritos...</div>
     }
 
@@ -35,15 +22,16 @@ export function Favorites() {
                 {favoriteMovies.map((item) => {
                     const voteAverageNumber = item.vote_average ? parseFloat(item.vote_average) : 0.0
                     const formattedMovie = {
-                        id: item.movie_id, 
+                        id: item.movie_id,
                         title: item.title,
                         poster_path: item.poster_path,
                         release_date: item.release_date,
                         vote_average: voteAverageNumber,
+                        media_type: item.media_type
                     }
                     return (
                         <div className={styles.cardContainer} key={`${formattedMovie.media_type}-${formattedMovie.id}`}>
-                            <Card key={formattedMovie.id} movie={formattedMovie} />
+                            <Card movie={formattedMovie} />
                         </div>
                     )
                 })}

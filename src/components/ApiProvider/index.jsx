@@ -16,7 +16,7 @@ async function fetchMovies(setMoviesList, pageNumber, listType) {
             const listaAtual = prevList || []
             return [...listaAtual, ...movies.results]
         })
-        
+
     } catch (error) {
         console.log('Erro ao buscar filmes: ', error.message)
     }
@@ -40,8 +40,11 @@ async function fetchHeroMovies(setMoviesList) {
 }
 
 export function ApiProvider({ children }) {
-   
+
     const [popularMoviesList, setPopularMoviesList] = useState(null)
+    const [popularSeriesList, setPopularSeriesList] = useState(null)
+    const [topRatedSeriesList, setTopRatedSeriesList] = useState(null)
+    const [onTheAirSeriesList, setOnTheAirSeriesList] = useState(null)
     const executouRef = useRef(false)
 
     const [topRatedMoviesList, setTopRatedMoviesList] = useState(null)
@@ -50,7 +53,7 @@ export function ApiProvider({ children }) {
     const [heroMoviesList, setHeroMoviesList] = useState(null)
 
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0)
-    
+
     useEffect(() => {
         if (executouRef.current) return
         executouRef.current = true
@@ -70,6 +73,16 @@ export function ApiProvider({ children }) {
             await fetchMovies(setUpcomingMoviesList, 2, 'upcoming')
             //hero movies
             await fetchHeroMovies(setHeroMoviesList)
+
+            //series populares
+            await fetchSeries(setPopularSeriesList, 1, 'popular')
+            await fetchSeries(setPopularSeriesList, 2, 'popular')
+            //series top_rated
+            await fetchSeries(setTopRatedSeriesList, 1, 'top_rated')
+            await fetchSeries(setTopRatedSeriesList, 2, 'top_rated')
+            //series no ar
+            await fetchSeries(setOnTheAirSeriesList, 1, 'on_the_air')
+            await fetchSeries(setOnTheAirSeriesList, 2, 'on_the_air')
 
         }
         loadInitialData()
@@ -91,31 +104,24 @@ export function ApiProvider({ children }) {
     const [searchPage, setSearchPage] = useState('1')
 
     //database
-    const [favoritesIds, setFavoritesIds] = useState(new Set())
+    const [favoriteMovies, setFavoriteMovies] = useState(null)
+    const [favoriteIds, setFavoriteIds] = useState(new Set())
+
 
     function favKey(id, media_type) {
         return `${media_type}-${id}`
     }
 
     useEffect(() => {
-        async function loadFavoritesIds() {
-            try {
-                const response = await fetch('http://localhost:3000/api/favorites/ids')
-                const rows = await response.json()
-                setFavoritesIds(new Set(rows.map(row => favKey(row.movie_id, row.media_type))))
-            } catch (error) {
-                console.error('Erro ao carregar favoritos:', error)
-            }
-        }
-        loadFavoritesIds()
+        fetchFavoriteIds(setFavoriteIds)
     }, [])
 
     async function toggleFavorite(movie) {
-        const media_type = movie.media_type || 'movie'
-        const key = favKey(movie.id, media_type)
-        const isFavorited = favoritesIds.has(key)
-        
-        setFavoritesIds(prev => {
+        const mediaType = movie.media_type || 'movie'
+        const key = favKey(movie.id, mediaType)
+        const isFavorited = favoriteIds.has(key)
+
+        setFavoriteIds(prev => {
             const next = new Set(prev)
             isFavorited ? next.delete(key) : next.add(key)
             return next
@@ -123,31 +129,76 @@ export function ApiProvider({ children }) {
 
         try {
             if (isFavorited) {
-                await fetch(`http://localhost:3000/api/favorites/${movie.id}/${media_type}`, {
-                    method: 'DELETE'
-                })
+                await fetch(`http://localhost:3000/api/favorites/${movie.id}/${mediaType}`, { method: 'DELETE' })
             } else {
-                await fetch(`http://localhost:3000/api/favorites`, {
+                await fetch('http://localhost:3000/api/favorites', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         movie_id: movie.id,
-                        media_type: media_type,
-                        title: movie.title || movie.name,
-                        poster_path: movie.poster_path || movie.profile_path || movie.backdrop_path,
+                        media_type: mediaType,
+                        title: movie.title,
+                        poster_path: movie.poster_path,
                         vote_average: movie.vote_average
                     })
                 })
             }
         } catch (error) {
-            console.error('Erro ao favoritar:', error)
-            setFavoritesIds(prev => {
+            console.log('Erro ao favoritar:', error)
+            setFavoriteIds(prev => {
                 const next = new Set(prev)
                 isFavorited ? next.add(key) : next.delete(key)
                 return next
             })
+        }
+    }
+
+    async function fetchSeries(setSeriesList, pageNumber, listType) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/series/${listType}?page=${pageNumber}`)
+
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`)
+            }
+
+            const series = await response.json()
+
+            setSeriesList(prevList => {
+                const listaAtual = prevList || []
+                return [...listaAtual, ...series.results]
+            })
+        } catch (error) {
+            console.log('Erro ao buscar séries: ', error.message)
+        }
+    }
+
+    async function fetchFavorites(setFavoriteMovies) {
+        try {
+            const response = await fetch('http://localhost:3000/api/favorites')
+
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`)
+            }
+
+            const favorites = await response.json()
+            setFavoriteMovies(favorites)
+        } catch (error) {
+            console.log('Erro ao buscar favoritos: ', error.message)
+        }
+    }
+
+    async function fetchFavoriteIds(setFavoriteIds) {
+        try {
+            const response = await fetch('http://localhost:3000/api/favorites/ids')
+
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`)
+            }
+
+            const rows = await response.json()
+            setFavoriteIds(new Set(rows.map(row => `${row.media_type}-${row.movie_id}`)))
+        } catch (error) {
+            console.log('Erro ao buscar favoritos: ', error.message)
         }
     }
 
@@ -158,6 +209,9 @@ export function ApiProvider({ children }) {
             nowPlayingMoviesList,
             upcomingMoviesList,
             heroMoviesList,
+            popularSeriesList,
+            topRatedSeriesList,
+            onTheAirSeriesList,
             currentHeroIndex,
             setCurrentHeroIndex,
             infoModalRef,
@@ -168,8 +222,12 @@ export function ApiProvider({ children }) {
             setQuery,
             searchPage,
             setSearchPage,
-            favoritesIds,
-            toggleFavorite
+            favoriteMovies,
+            favoriteIds,
+            toggleFavorite,
+            fetchSeries,
+            fetchFavoriteIds,
+            fetchFavorites: () => fetchFavorites(setFavoriteMovies)
         }}>
             {children}
         </ApiContext>
