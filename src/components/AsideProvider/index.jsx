@@ -20,26 +20,25 @@ export function AsideProvider({ children }) {
             id: crypto.randomUUID(),
             name:'Filmes',
             img: `${filmesImg}`,
-            cardFocus: false,
             to: '/movies',
         },
         {
             id: crypto.randomUUID(),
             name: 'Séries',
             img: `${tvImg}`,
-            cardFocus: false,
+            to: '/series',
         },
         {
             id: crypto.randomUUID(),
             name: 'Favoritos',
             img: `${favoritesImg}`,
-            cardFocus: false,
+            to: '/favorites',
         },
         {
             id: crypto.randomUUID(),
             name: 'Perfil',
             img: `${profileImg}`,
-            cardFocus: false,
+            to: '/profile',
         },
     ]
     )

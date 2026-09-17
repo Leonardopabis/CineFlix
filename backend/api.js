@@ -120,3 +120,20 @@ export async function searchMovies(query, page = 1) {
 
     return response.json()
 }
+
+export async function getFavoritesMovies() {
+    try {
+        const response = await fetch('http://localhost:3000/api/favorites')
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`)
+        }
+
+        const favorites = await response.json()
+        console.log(favorites)
+        return favorites
+    } catch (error) {
+        console.error('Erro ao buscar filmes favoritos:', error)
+        throw new Error('Erro ao buscar filmes favoritos')
+    }
+}

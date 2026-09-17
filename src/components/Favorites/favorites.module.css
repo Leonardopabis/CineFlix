@@ -1,0 +1,28 @@
+.favorites {
+    padding: 10px;
+}
+
+.favoritesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 16px;
+  align-items: start;
+}
+
+.cardContainer {
+    width: 200px;
+    min-height: 300px;
+    background-color: var(--background-terciary-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cardContainer img {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+}
+
