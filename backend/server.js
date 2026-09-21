@@ -13,6 +13,7 @@ import {
     getOnTheAirSeries
 } from './api.js'
 import db from './db/db.js'
+import { registerUser, loginUser, verifyToken } from './auth.js'
 
 const app = express()
 
@@ -106,10 +107,6 @@ app.get('/api/movies/search', async (req, res) => {
     }
 })
 
-app.listen(process.env.PORT, () => {
-    console.log(`Servidor rodando na porta ${process.env.PORT}`)
-})
-
 //database
 app.get('/api/favorites', async (req, res) => {
     try {
@@ -200,4 +197,56 @@ app.get('/api/series/on_the_air', async (req, res) => {
             message: 'erro ao buscar séries'
         })
     }
+})
+
+//auth
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { name, email, password } = req.body
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: 'Dados incompletos' })
+        }
+
+        const user = await registerUser(name, email, password)
+        res.status(201).json(user)
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ message: error.message })
+    }
+})
+
+app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { email, password } = req.body
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Dados incompletos' })
+        }
+
+        const result = await loginUser(email, password)
+        res.json(result)
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({ message: error.message })
+    }
+})
+
+app.get('/api/auth/me', verifyToken, async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT id, name, email FROM users WHERE id = ?', [req.userId])
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'Usuário não encontrado' })
+        }
+
+        res.json(rows[0])
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Erro ao buscar usuário' })
+    }
+})
+
+app.listen(process.env.PORT, () => {
+    console.log(`Servidor rodando na porta ${process.env.PORT}`)
 })
