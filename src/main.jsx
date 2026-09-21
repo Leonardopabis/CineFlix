@@ -5,13 +5,16 @@ import App from './App.jsx'
 import { AsideProvider } from './components/AsideProvider/index.jsx'
 import { ApiProvider } from './components/ApiProvider/index.jsx'
 import { AppRouter } from './router/index.jsx'
+import { AuthProvider } from './components/AuthProvider/index.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AsideProvider>
-      <ApiProvider>
-        <AppRouter/>
-      </ApiProvider>
+      <AuthProvider>
+        <ApiProvider>
+          <AppRouter/>
+        </ApiProvider>
+      </AuthProvider>
     </AsideProvider>
   </StrictMode>,
 )

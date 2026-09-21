@@ -1,0 +1,27 @@
+.profile {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.profile h2 {
+    color: var(--text-primary-color);
+    font-size: 28px;
+}
+
+.logoutButton {
+    align-self: flex-start;
+    padding: 10px 24px;
+    background-color: transparent;
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.logoutButton:hover {
+    background-color: var(--color-danger);
+    color: var(--text-primary-color);
+}
